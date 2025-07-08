@@ -1,0 +1,19 @@
+meta {
+  name: Update
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://127.0.0.1:7011/api/v1/todo-list-category/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Kategori Baru",
+    "description": "Deskripsi yang diperbarui"
+  }
+  
+}

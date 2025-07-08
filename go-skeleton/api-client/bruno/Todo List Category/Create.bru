@@ -1,0 +1,18 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:7011/api/v1/todo-lists-category
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name" : "New Todo 1",
+    "description" : "Sedang Belajar Golang"
+  }
+}
