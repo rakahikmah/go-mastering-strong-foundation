@@ -2,19 +2,15 @@ package todo_list_category_usecase
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"strconv"
 
-	// "time"
-
-	// errwrap "github.com/pkg/errors"
 	generalEntity "github.com/rahmatrdn/go-skeleton/entity"
-	// "github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
 	myentity "github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list_category/entity"
-	// "github.com/rahmatrdn/go-skeleton/internal/usecase"
-	// "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list/entity"
 )
 
 // TODO
@@ -42,9 +38,15 @@ type ICrudTodoListCategory interface {
 
 func (u *CrudTodoListCategory) Create(ctx context.Context, req entity.TodoListCategoryReq) error {
 	funcName := "CrudTodoListCategory.Create"
-	logFields := generalEntity.CaptureFields{
-		"user_id": "12345",
-	}
+     if req.UserID == 0 { // <-- PERUBAHAN DI SINI
+        err := errors.New("user_id tidak boleh kosong dalam request")
+        helper.LogError(funcName, "validasi request", err, nil, "UserID tidak ditemukan di request")
+        return err
+    }
+
+    logFields := generalEntity.CaptureFields{
+        "user_id": strconv.FormatInt(req.UserID, 10), // <-- PERUBAHAN DI SINI: Konversi int64 ke string
+    }
 
 	// TODO
 	// ambil request data
@@ -53,6 +55,7 @@ func (u *CrudTodoListCategory) Create(ctx context.Context, req entity.TodoListCa
 		Name:        req.Name,
 		Description: req.Description,
 		CreatedAt:   helper.DatetimeNowJakarta(),
+		CreatedBy :  req.UserID,
 	}
 	err := u.TodoListCategoryRepo.Create(ctx, nil, data, false)
 	if err != nil {
@@ -84,6 +87,7 @@ func (u *CrudTodoListCategory) GetAll(ctx context.Context) ([]entity.TodoListCat
 			Name:        row.Name,
 			Description: row.Description,
 			CreatedAt:   helper.ConvertToJakartaTime(row.CreatedAt),
+			CreatedBy:   row.CreatedBy,
 		})
 	}
 

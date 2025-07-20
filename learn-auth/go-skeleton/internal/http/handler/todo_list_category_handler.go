@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 
+	"github.com/rahmatrdn/go-skeleton/internal/http/middleware"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
 	todo_list_category_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list_category"
@@ -26,9 +27,9 @@ func NewTodoListCategoryHandler(
 }
 
 func (w *TodoListCategoryHandler) Register(app fiber.Router) {
-	app.Post("/todo-list-category", w.Create)
-	app.Get("/todo-list-category", w.GetAll)     // <-- Tambahan ini
-	app.Put("/todo-list-category/:id", w.Update) // <-- tambahkan ini
+	app.Post("/todo-list-category", middleware.VerifyJWTToken,w.Create)
+	app.Get("/todo-list-category", middleware.VerifyJWTToken,w.GetAll)     
+	app.Put("/todo-list-category/:id", w.Update) 
 	app.Delete("/todo-list-category/:id", w.Delete)
 
 }
@@ -36,10 +37,11 @@ func (w *TodoListCategoryHandler) Register(app fiber.Router) {
 func (w *TodoListCategoryHandler) Create(c *fiber.Ctx) error {
 	var req entity.TodoListCategoryReq
 
-	err := w.parser.ParserBodyRequest(c, &req)
+	err := w.parser.ParserBodyRequestWithUserID(c, &req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
+
 
 	err = w.CrudTodoListCategoryUsecase.Create(c.Context(), req)
 	if err != nil {

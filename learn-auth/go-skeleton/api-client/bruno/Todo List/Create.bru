@@ -7,12 +7,20 @@ meta {
 post {
   url: {{url}}/api/v1/todo-lists
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+headers {
+  : 
+}
+
+auth:bearer {
+  token: eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTMyODQzODIsInVzZXJfaWQiOjEsImVtYWlsIjoicmFrYWhpa21haDIxQGdtYWlsLmNvbSIsInJvbGUiOjJ9.bj8rqQkbKYNaSDvefGTbAvaGbjOVfH7LvTNisB0XWsRxcCfng4zuY_Sm_x-1YcR9ISIhiNYBFZnptdn68T9rc2Y7vP8PSnjx4PC7nHsfSQT2T3GqbVdRnL9wyg4wxtlYvo2O0lccvRIiCEz7OZciDaHhsXuR21rnArqUnKqqBg_C9Yk7m0_eUS1koy-v8-ZgTSc4-TB9j_KOJ2SqWZEoTJfFQPgOeoN-o81nH537iMtlDtjsERBVJ_buWQ7dzH3ACeKfp0MJQBZEBBik0BeMvKRilqTr1AnwXW7YT8eNPD2tt2q3IgZtp3P1eRCYlC-lSWg4sW3vkh0wywxKH6uw-g
 }
 
 body:json {
   {
-    "title" : "Presentasi",
+    "title" : "Presentasi Test With User",
     "description" : "Membuat PPT Dokumen untuk Meeting",
     "doing_at" : "2025-06-10"
   }

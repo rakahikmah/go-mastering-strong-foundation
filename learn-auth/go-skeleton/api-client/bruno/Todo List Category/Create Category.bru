@@ -1,15 +1,26 @@
 meta {
-  name: Check Token
+  name: Create Category
   type: http
-  seq: 3
+  seq: 6
 }
 
-get {
-  url: {{url}}/api/v1/auth/check-token
-  body: none
+post {
+  url: {{url}}/api/v1/todo-list-category
+  body: json
   auth: bearer
+}
+
+headers {
+  : 
 }
 
 auth:bearer {
   token: eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTMyODQzODIsInVzZXJfaWQiOjEsImVtYWlsIjoicmFrYWhpa21haDIxQGdtYWlsLmNvbSIsInJvbGUiOjJ9.bj8rqQkbKYNaSDvefGTbAvaGbjOVfH7LvTNisB0XWsRxcCfng4zuY_Sm_x-1YcR9ISIhiNYBFZnptdn68T9rc2Y7vP8PSnjx4PC7nHsfSQT2T3GqbVdRnL9wyg4wxtlYvo2O0lccvRIiCEz7OZciDaHhsXuR21rnArqUnKqqBg_C9Yk7m0_eUS1koy-v8-ZgTSc4-TB9j_KOJ2SqWZEoTJfFQPgOeoN-o81nH537iMtlDtjsERBVJ_buWQ7dzH3ACeKfp0MJQBZEBBik0BeMvKRilqTr1AnwXW7YT8eNPD2tt2q3IgZtp3P1eRCYlC-lSWg4sW3vkh0wywxKH6uw-g
+}
+
+body:json {
+  {
+    "name" : "Presentasi Test With User Token 123",
+    "description" : "Membuat PPT Dokumen untuk Meeting Token"
+  }
 }
